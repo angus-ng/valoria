@@ -31,7 +31,7 @@ const piecesError = ref<string | null>(null);
 
 const submit = () => {
   const selectedSlots = Object.entries(form.pieces)
-    .filter(([_, value]) => value)
+    .filter(([, value]) => value)
     .map(([slot]) => slot);
 
   if (selectedSlots.length === 0) {

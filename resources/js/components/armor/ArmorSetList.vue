@@ -94,11 +94,11 @@ const grouped = computed(() => {
 
 <template>
   <ConfirmationDialog
-  :show="showConfirm"
-  title="Delete Armor Set"
-  message="Are you sure you want to delete this armor set? This action cannot be undone."
-  @confirm="confirmDelete"
-  @cancel="cancelDelete"
+    :show="showConfirm"
+    title="Delete Armor Set"
+    message="Are you sure you want to delete this armor set? This action cannot be undone."
+    @confirm="confirmDelete"
+    @cancel="cancelDelete"
   />
   <div class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/50 dark:border-[#2c2c21] w-full h-full">
     <PlaceholderPattern opacity="30%" />
@@ -108,29 +108,68 @@ const grouped = computed(() => {
       <div v-if="armorSets.length === 0" class="text-sm text-gray-500 dark:text-gray-400 italic">
         No armor sets available.
       </div>
-      
+
       <div v-for="(groups, source) in grouped" :key="source" class="space-y-6">
         <h3 class="text-md font-semibold text-[#4f4f3a] dark:text-[#d2d2aa] capitalize">{{ source }}</h3>
 
-        <div
-          v-if="source.toLowerCase() === 'monster'"
-          v-for="(sets, monsterId) in groups"
-          :key="monsterId"
-          class="rounded-xl border border-[#b5b2a3]/50 dark:border-[#2c2c21]/50 bg-[#f0efea]/60 dark:bg-[#1a1a14]/50 p-4 space-y-2"
-        >
-          <div class="flex items-center gap-2 mb-2">
-            <img
-              v-if="sets[0].monster?.icon_url"
-              :src="sets[0].monster?.icon_url"
-              class="w-5 h-5 object-contain rounded border border-[#3c3c2f]/30 dark:border-[#2c2c21]/40"
-            />
-            <h4 class="text-sm font-medium text-[#2e2e23] dark:text-[#eaeac5]">
-              {{ sets[0]?.monster?.name || 'Unknown Monster' }}
-            </h4>
-          </div>
+        <template v-if="source.toLowerCase() === 'monster'">
+          <div
+            v-for="(sets, monsterId) in groups"
+            :key="monsterId"
+            class="rounded-xl border border-[#b5b2a3]/50 dark:border-[#2c2c21]/50 bg-[#f0efea]/60 dark:bg-[#1a1a14]/50 p-4 space-y-2"
+          >
+            <div class="flex items-center gap-2 mb-2">
+              <img
+                v-if="sets[0].monster?.icon_url"
+                :src="sets[0].monster?.icon_url"
+                class="w-5 h-5 object-contain rounded border border-[#3c3c2f]/30 dark:border-[#2c2c21]/40"
+              />
+              <h4 class="text-sm font-medium text-[#2e2e23] dark:text-[#eaeac5]">
+                {{ sets[0]?.monster?.name || 'Unknown Monster' }}
+              </h4>
+            </div>
 
-          <ul class="divide-y divide-[#3c3c2f]/20 dark:divide-[#2c2c21]/30">
-            <li v-for="set in sets" :key="set.id" class="py-2">
+            <ul class="divide-y divide-[#3c3c2f]/20 dark:divide-[#2c2c21]/30">
+              <li v-for="set in sets" :key="set.id" class="py-2">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="font-medium text-[#2e2e23] dark:text-[#eaeac5]">{{ set.name }}</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">★{{ set.rarity }}</span>
+                    <button
+                      v-if="isAdmin"
+                      @click="askDelete(set.id)"
+                      class="text-xs px-2 py-1 rounded bg-red-600/80 text-white hover:bg-red-700 transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2 text-sm text-[#2e2e23] dark:text-[#eaeac5]">
+                  <span
+                    v-for="slot in ['Head', 'Chest', 'Arms', 'Waist', 'Legs']"
+                    :key="slot"
+                    :class="[
+                      'text-xs px-2 py-1 rounded',
+                      set.pieces.some(p => p.slot === slot)
+                        ? 'bg-[#e2e2dc] dark:bg-[#2a2a1d]'
+                        : 'bg-[#00000020] dark:bg-[#ffffff10] text-[#777] dark:text-[#888]'
+                    ]"
+                  >
+                    {{ slot }}
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </template>
+
+        <template v-else>
+          <div v-for="(sets, groupKey) in groups" :key="groupKey" class="space-y-4">
+            <div
+              v-for="set in sets"
+              :key="set.id"
+              class="rounded-xl border border-[#b5b2a3]/50 dark:border-[#2c2c21]/50 bg-[#f0efea]/60 dark:bg-[#1a1a14]/50 p-4 space-y-2"
+            >
               <div class="flex items-center justify-between mb-1">
                 <span class="font-medium text-[#2e2e23] dark:text-[#eaeac5]">{{ set.name }}</span>
                 <div class="flex items-center gap-2">
@@ -144,7 +183,6 @@ const grouped = computed(() => {
                   </button>
                 </div>
               </div>
-
               <div class="flex flex-wrap gap-2 text-sm text-[#2e2e23] dark:text-[#eaeac5]">
                 <span
                   v-for="slot in ['Head', 'Chest', 'Arms', 'Waist', 'Legs']"
@@ -159,50 +197,9 @@ const grouped = computed(() => {
                   {{ slot }}
                 </span>
               </div>
-            </li>
-          </ul>
-        </div>
-
-        <div
-          v-else
-          v-for="(sets, groupKey) in groups"
-          :key="groupKey"
-          class="space-y-4"
-        >
-          <div
-            v-for="set in sets"
-            :key="set.id"
-            class="rounded-xl border border-[#b5b2a3]/50 dark:border-[#2c2c21]/50 bg-[#f0efea]/60 dark:bg-[#1a1a14]/50 p-4 space-y-2"
-          >
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-medium text-[#2e2e23] dark:text-[#eaeac5]">{{ set.name }}</span>
-              <div class="flex items-center gap-2">
-                <span class="text-sm text-gray-500 dark:text-gray-400">★{{ set.rarity }}</span>
-                <button
-                  v-if="isAdmin"
-                  @click="askDelete(set.id)"
-                  class="text-xs px-2 py-1 rounded bg-red-600/80 text-white hover:bg-red-700 transition"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-            <div class="flex flex-wrap gap-2 text-sm text-[#2e2e23] dark:text-[#eaeac5]">
-              <span
-                v-for="slot in ['Head', 'Chest', 'Arms', 'Waist', 'Legs']"
-                :key="slot"
-                :class="[ 
-                  'text-xs px-2 py-1 rounded',
-                  set.pieces.some(p => p.slot === slot)
-                    ? 'bg-[#e2e2dc] dark:bg-[#2a2a1d]'
-                    : 'bg-[#00000020] dark:bg-[#ffffff10] text-[#777] dark:text-[#888]'
-                ]"
-              >
-                {{ slot }}
-              </span>
             </div>
           </div>
-        </div>
+        </template>
       </div>
 
       <div
@@ -233,7 +230,7 @@ const grouped = computed(() => {
             <span
               v-for="slot in ['Head', 'Chest', 'Arms', 'Waist', 'Legs']"
               :key="slot"
-              :class="[ 
+              :class="[
                 'text-xs px-2 py-1 rounded',
                 set.pieces.some(p => p.slot === slot)
                   ? 'bg-[#e2e2dc] dark:bg-[#2a2a1d]'

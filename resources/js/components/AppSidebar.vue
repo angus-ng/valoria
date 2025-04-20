@@ -18,7 +18,7 @@ const page = usePage() as unknown as Page<AppPageProps>;
 
 const isAdmin = computed(() => page.props.auth?.user?.role === 'admin');
 
-const logoLink = computed(() => {
+computed(() => {
   return isAdmin.value ? route('admin.dashboard') : route('dashboard');
 });
 
