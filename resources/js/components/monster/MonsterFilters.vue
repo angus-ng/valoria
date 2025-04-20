@@ -40,7 +40,7 @@ onMounted(fetchHabitats);
 <template>
   <div
     class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/30 dark:border-[#2c2c21]/50 
-           bg-[#e2e2dc]/70 dark:bg-[#1a1a14]/60 p-6 space-y-6"
+           bg-[#e2e2dc]/70 dark:bg-[#1a1a14]/60 p-6 space-y-6 h-full"
   >
     <PlaceholderPattern opacity="30%" />
     <div class="relative space-y-4">

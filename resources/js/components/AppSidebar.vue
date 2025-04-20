@@ -7,12 +7,13 @@ import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { LayoutGrid } from 'lucide-vue-next';
 import SkullIcon from '@/components/icons/SkullIcon.vue';
+import CrownIcon from './icons/CrownIcon.vue';
 import AppLogo from './AppLogo.vue';
-
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { Page } from '@inertiajs/inertia';
 import { AppPageProps } from '@/types/inertia';
+import ArmorIcon from './icons/ArmorIcon.vue';
 
 const page = usePage() as unknown as Page<AppPageProps>;
 
@@ -33,6 +34,16 @@ const mainNavItems: NavItem[] = [
         href: '/monsters',
         icon: SkullIcon,
     },
+    {
+        title: 'Crowns',
+        href: '/crowns',
+        icon: CrownIcon,
+    },
+    // {
+    //     title: 'Armors',
+    //     href: '/armors',
+    //     icon: ArmorIcon,
+    // },
 ];
 
 

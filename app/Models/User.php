@@ -49,9 +49,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function userCrowns()
+    public function crowns()
     {
-        return $this->hasMany(UserCrown::class);
+        return $this->belongsToMany(Crown::class, 'user_crowns')
+            ->withPivot('obtained', 'obtained_at')
+            ->withTimestamps();
     }
 
     public function armorPieces()
