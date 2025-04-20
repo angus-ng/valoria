@@ -15,6 +15,7 @@ export interface User {
   email: string;
   avatar?: string;
   email_verified_at: string | null;
+  role: 'user' | 'admin';
   created_at: string;
   updated_at: string;
 }
@@ -30,6 +31,11 @@ export interface AppPageProps extends Record<string, unknown> {
     routes: Record<string, any>;
     [key: string]: unknown;
   };
+  flash?: {
+    success?: string;
+    error?: string;
+    info?: string;
+  }
 }
 
 declare module '@vue/runtime-core' {

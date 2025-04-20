@@ -1,6 +1,7 @@
 import type { PageProps } from '@inertiajs/core';
 import type { LucideIcon } from 'lucide-vue-next';
 import type { Config } from 'ziggy-js';
+import type { Component } from 'vue';
 
 export interface Auth {
     user: User;
@@ -14,7 +15,7 @@ export interface BreadcrumbItem {
 export interface NavItem {
     title: string;
     href: string;
-    icon?: LucideIcon;
+    icon?: Component;
     isActive?: boolean;
 }
 
@@ -30,7 +31,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
+    avatar: string;
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;

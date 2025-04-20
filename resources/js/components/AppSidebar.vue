@@ -6,7 +6,21 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { LayoutGrid } from 'lucide-vue-next';
+import SkullIcon from '@/components/icons/SkullIcon.vue';
 import AppLogo from './AppLogo.vue';
+
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import { Page } from '@inertiajs/inertia';
+import { AppPageProps } from '@/types/inertia';
+
+const page = usePage() as unknown as Page<AppPageProps>;
+
+const isAdmin = computed(() => page.props.auth?.user?.role === 'admin');
+
+const logoLink = computed(() => {
+  return isAdmin.value ? route('admin.dashboard') : route('dashboard');
+});
 
 const mainNavItems: NavItem[] = [
     {
@@ -14,7 +28,21 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Monsters',
+        href: '/monsters',
+        icon: SkullIcon,
+    },
 ];
+
+
+if (isAdmin.value) {
+    mainNavItems.push({
+      title: 'Admin Dashboard',
+      href: '/admin/dashboard',
+      icon: LayoutGrid, 
+    });
+  }
 
 const footerNavItems: NavItem[] = [
 ];
