@@ -46,7 +46,7 @@ const emit = defineEmits(['updated']);
   @confirm="confirmDelete"
   @cancel="cancelDelete"
   />
-  <div class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/50 dark:border-[#2c2c21] flex items-center">
+  <div class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/50 dark:border-[#2c2c21] flex items-center h-full">
     <PlaceholderPattern opacity="30%"/>
     <div class="relative w-full p-6 space-y-3">
       <h2 class="text-lg font-semibold text-[#4f4f3a] dark:text-[#d2d2aa]">Existing Habitats</h2>

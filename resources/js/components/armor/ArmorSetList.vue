@@ -100,7 +100,7 @@ const grouped = computed(() => {
   @confirm="confirmDelete"
   @cancel="cancelDelete"
   />
-  <div class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/50 dark:border-[#2c2c21] w-full">
+  <div class="relative overflow-hidden rounded-xl border border-[#3c3c2f]/50 dark:border-[#2c2c21] w-full h-full">
     <PlaceholderPattern opacity="30%" />
     <div class="relative w-full p-6 space-y-6">
       <h2 class="text-lg font-semibold text-[#4f4f3a] dark:text-[#d2d2aa]">Armor Sets</h2>
