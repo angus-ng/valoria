@@ -6,6 +6,8 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Habitat } from '@/types/monster';
 import PlaceholderPattern from '@/components/PlaceholderPattern.vue';
+import SmallCrown from '@/components/icons/SmallCrown.vue';
+import LargeCrown from '@/components/icons/LargeCrown.vue';
 
 const props = defineProps<{
   crowns: {
@@ -99,7 +101,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         <li
           v-for="monster in groupedMonsters"
           :key="monster.id"
-          class="relative rounded border border-[#3c3c2f]/30 dark:border-[#2c2c21]/40 bg-[#f8f8f5] dark:bg-[#1f1f18] p-4 space-y-3 overflow-hidden"
+          class="relative rounded-xl border border-[#b5b2a3] dark:border-[#2c2c21]/50 bg-[#e8e6dd] dark:bg-[#1a1a14] p-6 space-y-4 overflow-hidden shadow-sm"
         >
           <PlaceholderPattern class="absolute inset-0 pointer-events-none" opacity="30%"/>
           
@@ -132,7 +134,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                   ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200'
                   : 'bg-[#00000010] text-[#777] dark:bg-[#ffffff10] dark:text-[#999]'"
               >
-                👑 Small
+              <span class="flex flex-col justify-center items-center">
+                <SmallCrown class="w-8 h-8"/> Small
+              </span>
                 <div
                   v-if="!monster.smallObtained"
                   class="absolute inset-0 bg-black/40 dark:bg-black/60 rounded pointer-events-none"
@@ -146,7 +150,9 @@ const breadcrumbs: BreadcrumbItem[] = [
                   ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-200'
                   : 'bg-[#00000010] text-[#777] dark:bg-[#ffffff10] dark:text-[#999]'"
               >
-                👑 Large
+              <span class="flex flex-col justify-center items-center">
+                <LargeCrown class="w-8 h-8"/> Large
+              </span>
                 <div
                   v-if="!monster.largeObtained"
                   class="absolute inset-0 bg-black/40 dark:bg-black/60 rounded pointer-events-none"

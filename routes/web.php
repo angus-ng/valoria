@@ -33,7 +33,7 @@ Route::middleware(['auth'])
     ->group(function (){
         Route::get('monsters/all', [MonsterController::class, 'all']);
         Route::get('habitats', [HabitatController::class, 'index']);
-        Route::get('armor-sets', [ArmorSetController::class, 'index']);
+        Route::get('armor-sets', [ArmorSetController::class, 'all']);
     });
 
 Route::middleware(['auth', IsAdmin::class])
@@ -52,6 +52,8 @@ Route::middleware(['auth'])
             ->name('monsters.show');
         Route::get('/crowns', [CrownController::class, 'index'])->name('crowns.index');
         Route::post('/crowns/toggle', [CrownController::class, 'toggle'])->name('crowns.toggle');
+        Route::get('/armor-sets', [ArmorSetController::class, 'index'])->name('armors.index');
+        Route::post('/armor-sets/toggle', [ArmorSetController::class, 'toggle'])->name('armors.toggle');
     });
 
 Route::middleware(['auth', IsAdmin::class])

@@ -19,4 +19,11 @@ class ArmorPiece extends Model
     {
         return $this->belongsTo(ArmorSet::class, 'armor_set_id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_armor_pieces')
+            ->withPivot(['obtained', 'obtained_at'])
+            ->withTimestamps();
+    }
 }

@@ -39,11 +39,11 @@ const mainNavItems: NavItem[] = [
         href: '/crowns',
         icon: CrownIcon,
     },
-    // {
-    //     title: 'Armors',
-    //     href: '/armors',
-    //     icon: ArmorIcon,
-    // },
+    {
+        title: 'Armors',
+        href: '/armor-sets',
+        icon: ArmorIcon,
+    },
 ];
 
 

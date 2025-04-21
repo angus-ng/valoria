@@ -58,6 +58,8 @@ class User extends Authenticatable
 
     public function armorPieces()
     {
-        return $this->hasMany(UserArmorPiece::class);
+        return $this->belongsToMany(ArmorPiece::class, 'user_armor_pieces')
+            ->withPivot(['obtained', 'obtained_at'])
+            ->withTimestamps();
     }
 }
