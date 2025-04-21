@@ -39,4 +39,4 @@ RUN npm install
 EXPOSE 80 5173
 
 # Command to run both Laravel and Vue.js
-CMD php artisan serve --host=0.0.0.0 --port=80 & npm run dev --prefix /var/www/html/frontend
+CMD php artisan serve --host=0.0.0.0 --port=80 & npm run dev --prefix /var/www/html
