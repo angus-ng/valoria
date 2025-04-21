@@ -6,6 +6,10 @@ import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    server: {
+        host: '0.0.0.0',  // Ensure Vite listens on all interfaces
+        port: 5173,        // Default port for Vue.js (Vite)
+      },
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
